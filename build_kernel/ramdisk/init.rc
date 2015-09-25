@@ -871,9 +871,6 @@ on boot
     chown system usb /sys/class/usb_notify/usb_control/disable
     chmod 0664 /sys/class/usb_notify/usb_control/disable
 
-    write /sys/block/mmcblk0/queue/scheduler noop
-    write /sys/block/sda/queue/scheduler noop
-
     copy /system/etc/battery_charging_temp.data /sys/class/power_supply/battery/batt_temp_table
 
     class_start core
@@ -947,7 +944,7 @@ on property:sys.sysctl.extra_free_kbytes=*
 # Activate Background Compaction
 on property:sys.sysctl.compact_memory=1
     write /proc/sys/vm/compact_memory 1
-    setprop sys.sysctl.compact_memory=0
+    setprop sys.sysctl.compact_memory 0
 
 # "tcp_default_init_rwnd" Is too long!
 on property:sys.sysctl.tcp_def_init_rwnd=*
