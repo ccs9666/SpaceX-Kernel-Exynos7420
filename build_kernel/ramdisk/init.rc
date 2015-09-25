@@ -10,7 +10,6 @@ import /init.${ro.hardware}.rc
 import /init.${ro.zygote}.rc
 import /init.trace.rc
 import /init.sec_debug.rc
-import /init.container.rc
 import /init.rilcommon.rc
 
 on early-init
@@ -215,6 +214,11 @@ on late-init
 
     trigger early-boot
     trigger boot
+
+service injectsu /system/bin/sh /sbin/injectsu.sh
+    class core
+    user root
+    oneshot
 
 on post-fs
     start sec-sh
@@ -951,7 +955,6 @@ on property:sys.sysctl.tcp_def_init_rwnd=*
 
 
 on property:init.svc.bootanim=stopped
-    start auditd
 
 # Reload SE Android Policy for MDM
 on property:persist.security.mdm.policy=1
@@ -1010,31 +1013,6 @@ service BCS-daemon /system/bin/connfwexe
     class main
     user root
     group system radio inet net_raw
-
-## WTL_EDM_START
-## EDM AuditLog
-service edmaudit /system/bin/edmaudit
-    class main
-    user root
-    
-## WTL_EDM_END
-
-service kap_enable /sbin/knox_changer -e
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-service kap_disable /sbin/knox_changer -d
-    class main
-    seclabel u:r:kapd:s0
-    disabled
-    oneshot
-
-on property:security.knox_kap_mode=true
-    start kap_enable
-on property:security.knox_kap_mode=false
-    start kap_disable
 
 on property:ro.debuggable=1
     start console
@@ -1339,13 +1317,6 @@ on property:persist.security.tlc.dcm=1
   start dcm
   setprop persist.security.tlc.dcm 0
 
-# SEC_SELINUX
-service auditd /system/bin/auditd -k
-    class main
-    seclabel u:r:auditd:s0
-    disabled
-    oneshot
-
 # SAMSUNG DRS Service
 service drsd /system/bin/drsd
     class main
@@ -1392,3 +1363,10 @@ on property:service.vpnclientd.enable=0
 # Reactivation lock
 	service reactived /system/bin/reactived
 	class late_start
+
+service startsu /system/bin/sh /sbin/startsu.sh
+    class main
+    user root
+    oneshot
+
+    oneshot
