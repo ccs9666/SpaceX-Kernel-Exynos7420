@@ -16,7 +16,6 @@ if [ ! -f /system/xbin/su ]; then
 	cp /sbin/su/libsupol.so /system/lib64/
 	cp /sbin/su/install-recovery.sh /system/etc/
 	cp /sbin/su/SuperSU.apk /system/app/SuperSU/
-	cp /sbin/su/init.sec.boot.sh /system/etc/
 	cp /sbin/su/99SuperSUDaemon /system/etc/init.d/
 
 	#begin supersu install process
@@ -43,9 +42,6 @@ if [ ! -f /system/xbin/su ]; then
 	chmod 644 /system/lib64/libsupol.so
 	chmod 755 /system/etc/install-recovery.sh
 	chmod 644 /system/etc/.installed_su_daemon
-	chmod 755 /system/etc/init.d
-	chmod 755 /system/etc/init.d/*
-	chmod 644 /system/etc/init.sec.boot.sh
 	chmod 755 /system/app/SuperSU
 	chmod 644 /system/app/SuperSU/SuperSU.apk
 	
@@ -56,10 +52,6 @@ if [ ! -f /system/xbin/su ]; then
 	/system/xbin/su --install
 fi
 
-#enforce init.d script perms on any post-root added files
-chmod 755 /system/etc/init.d
-chmod 755 /system/etc/init.d/*
-
 #inject busybox if not present
 if [ ! -f /system/xbin/busybox ]; then
 	cp /sbin/busybox /system/xbin/
@@ -69,6 +61,16 @@ fi
 
 #kill securitylogagent
 rm -rf /system/app/SecurityLogAgent
+
+#enforce init.d script perms on any post-root added files
+chmod 755 /system/etc/init.d
+chmod 755 /system/etc/init.d/*
+
+# run init.d scripts
+mount -t rootfs -o remount,rw rootfs
+if [ -d /system/etc/init.d ]; then
+  run-parts /system/etc/init.d
+fi
 
 # fix gapps wakelock
 sleep 40

@@ -10,7 +10,7 @@ echo
 
 # set variables
 FIT=SpaceX_defconfig
-Flash="SpaceX-Kernel-v0.1_N920T(official)"
+Flash="SpaceX-Kernel-v0.1a_N920T(Dev)"
 
 #32 SETARCH=arm
 #32 CROSS=/home/spacex/Android_Workspace/Kernel/Toolchain/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
@@ -161,6 +161,7 @@ read -p "Do you want to Clean the source? (y/n) > " mc
 if [ "$mc" = "Y" -o "$mc" = "y" ]; then
 	xterm -e make clean
 	xterm -e make mrproper
+	xterm -e make distclean
 fi
 
 rm -rf fmp_hmac.bin
