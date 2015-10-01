@@ -10,7 +10,7 @@ echo
 
 # set variables
 FIT=SpaceX_defconfig_FI
-Flash="SpaceX-Kernel-v0.1_G928FI(Dev)"
+Flash="SpaceX-Kernel-v0.1_G928FI(official)"
 
 #32 SETARCH=arm
 #32 CROSS=/home/spacex/Android_Workspace/Kernel/Toolchain/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
