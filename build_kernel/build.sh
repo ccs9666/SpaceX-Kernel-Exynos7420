@@ -10,7 +10,7 @@ echo
 
 # set variables
 FIT=SpaceX_defconfig_OPEN
-Flash="SpaceX-Kernel-v0.2_N920C.I(Dev)"
+Flash="SpaceX-Kernel-v0.2_N920T.W8(Dev)"
 
 #32 SETARCH=arm
 #32 CROSS=/home/spacex/Android_Workspace/Kernel/Toolchain/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-
@@ -27,7 +27,7 @@ DC=arch/arm64/configs
 # updater-script setup
 sed -i -e '/ui_print("~~~~~~~~~ SpaceX Kernel for/c\ui_print("~~~~~~~~~ SpaceX Kernel for Galaxy Note 5 ~~~~~~~~~");' Output/META-INF/com/google/android/updater-script
 
-sed -i -e '/by ManhIT ~~~~~~~~~~~~~~~");/c\ui_print("~~~~~~~~~~~~~~~ N920C/I - by ManhIT ~~~~~~~~~~~~~~~");' Output/META-INF/com/google/android/updater-script
+sed -i -e '/by ManhIT ~~~~~~~~~~~~~~~");/c\ui_print("~~~~~~~~~~~~~~~ N920W/8 - by ManhIT ~~~~~~~~~~~~~~~");' Output/META-INF/com/google/android/updater-script
 
 sed -i -e '/package_extract_file("boot.img/c\package_extract_file("boot.img", "/dev/block/platform/15570000.ufs/by-name/BOOT");' Output/META-INF/com/google/android/updater-script
 
